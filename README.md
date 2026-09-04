@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Alex Morgan Portfolio
+
+A responsive About Me portfolio built with Next.js, TypeScript, and Tailwind CSS.
 
 ## Getting Started
 
@@ -7,24 +9,36 @@ First, run the development server:
 ```bash
 npm run dev
 # or
-yarn dev
+The homepage lives in `src/app/page.tsx`, with the global visual system in `src/app/globals.css`.
 # or
-pnpm dev
-# or
-bun dev
+## Production Checks
+
+Run the same checks used before deployment:
+
+```bash
+npm run lint
+npm run build
 ```
-
+# or
+## Deploy on Vercel
+```
+### Dashboard
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Push this repository to GitHub, GitLab, or Bitbucket.
+2. Import the repository at [vercel.com/new](https://vercel.com/new).
+3. Keep the detected framework as **Next.js** and the default build settings.
+4. Click **Deploy**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+No environment variables or custom Vercel configuration are required for the current page.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### CLI
 
-## Learn More
+Install the Vercel CLI, log in, and deploy from the project root:
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+```bash
+npm i -g vercel
+vercel
+```
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
