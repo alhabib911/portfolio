@@ -1,20 +1,51 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import DashboardLayout from '@/components/DashboardLayout';
-import { blogPosts } from '@/data/blogs';
+import { createClient } from '@/lib/supabase/client';
+
+type Blog = {
+  id: string;
+  title: string;
+  date: string;
+  readTime: string;
+  category: string;
+  image: string;
+  description: string;
+};
 
 const pageSize = 6;
 
 export default function MyBlogsPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
 
-  const totalPages = Math.ceil(blogPosts.length / pageSize);
+  useEffect(() => {
+    const supabase = createClient();
+    supabase
+      .from('blogs')
+      .select('id, title, date, read_time, category, image_url, description')
+      .eq('is_published', true)
+      .order('date', { ascending: false })
+      .then(({ data }) => {
+        setBlogs((data || []).map((blog) => ({
+          id: blog.id,
+          title: blog.title,
+          date: blog.date,
+          readTime: blog.read_time,
+          category: blog.category,
+          image: blog.image_url || '/images/profile.jpg.png',
+          description: blog.description || '',
+        })));
+      });
+  }, []);
+
+  const totalPages = Math.ceil(blogs.length / pageSize);
   const visibleBlogs = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
-    return blogPosts.slice(start, start + pageSize);
-  }, [currentPage]);
+    return blogs.slice(start, start + pageSize);
+  }, [blogs, currentPage]);
 
   return (
     <DashboardLayout>
@@ -32,7 +63,7 @@ export default function MyBlogsPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {visibleBlogs.map((blog) => (
+          {visibleBlogs.map((blog: Blog) => (
             <article
               key={blog.id}
               className="group bg-gray-100 border border-gray-200 rounded-[32px] overflow-hidden hover:border-gray-200 transition-all duration-300 flex flex-col h-full"

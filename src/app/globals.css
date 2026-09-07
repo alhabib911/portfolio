@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
+  --background: #f8fafc;
+  --foreground: #374151;
   --primary: #059669;
-  --accent: #0891b2;
+  --accent: #059669;
 }
 
 @theme inline {
@@ -20,8 +20,101 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
+  background-image: radial-gradient(circle at 75% 0%, rgba(5, 150, 105, 0.08), transparent 28rem), linear-gradient(135deg, #f8fafc 0%, #ffffff 48%, #f1f5f9 100%);
+}
+
+::selection {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.portfolio-shell .text-gray-700,
+.portfolio-shell .text-gray-600,
+.portfolio-shell .text-slate-800 {
+  color: #374151;
+}
+
+.portfolio-shell .text-slate-400 {
+  color: #64748b;
+}
+
+.portfolio-shell .bg-gray-100,
+.portfolio-shell .bg-white {
+  background-color: #ffffff;
+}
+
+.portfolio-shell .border-gray-200,
+.portfolio-shell .border-slate-200 {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.portfolio-shell section {
+  border-color: #e2e8f0;
+}
+
+.portfolio-shell h1,
+.portfolio-shell h2,
+.portfolio-shell h3,
+.portfolio-shell h4,
+.portfolio-shell label {
+  color: #374151;
+}
+
+.portfolio-shell .text-white {
+  color: #374151;
+}
+
+.portfolio-shell h1 {
+  font-size: clamp(2.35rem, 6vw, 5.2rem);
+}
+
+.portfolio-shell h2 {
+  font-size: clamp(1.55rem, 3.2vw, 2.65rem);
+}
+
+.portfolio-shell h3 {
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+}
+
+.portfolio-shell p {
+  font-size: 0.9rem;
+}
+
+.portfolio-shell section:not(#home) {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.portfolio-shell section .mb-12 {
+  margin-bottom: 2rem;
+}
+
+.portfolio-shell section .gap-10 {
+  gap: 1.75rem;
+}
+
+.portfolio-shell section .gap-8 {
+  gap: 1.5rem;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+.admin-input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(51 65 85);
+  background: rgb(30 41 59);
+  padding: 0.625rem 1rem;
+  color: rgb(241 245 249);
+  outline: none;
+}
+
+.admin-input:focus {
+  border-color: rgb(16 185 129);
 }

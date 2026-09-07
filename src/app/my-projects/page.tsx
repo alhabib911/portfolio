@@ -1,7 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import DashboardLayout from '@/components/DashboardLayout';
+import { createClient } from '@/lib/supabase/client';
 
 const projects = [
   { id: 1, title: 'Chada.site', category: 'SaaS', description: 'Built chada.site, an anonymous civic reporting platform designed to help people document and report incidents of extortion.', tags: ['TypeScript', 'Next.js', 'Redux', 'NestJS'], live: 'https://www.chada.site/' },
@@ -22,13 +23,35 @@ const pageSize = 6;
 
 export default function MyProjectsPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [databaseProjects, setDatabaseProjects] = useState<typeof projects>([]);
 
-  const totalPages = Math.ceil(projects.length / pageSize);
+  useEffect(() => {
+    const supabase = createClient();
+    supabase
+      .from('projects')
+      .select('id, title, category, description, tech_stack, live_url')
+      .eq('is_published', true)
+      .order('created_at', { ascending: false })
+      .then(({ data }) => {
+        setDatabaseProjects((data || []).map((project) => ({
+          id: project.id,
+          title: project.title,
+          category: project.category || 'Other',
+          description: project.description || '',
+          tags: project.tech_stack || [],
+          live: project.live_url || '#',
+        })));
+      });
+  }, []);
+
+  const visibleProjectList = databaseProjects.length ? databaseProjects : projects;
+
+  const totalPages = Math.ceil(visibleProjectList.length / pageSize);
 
   const visibleProjects = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
-    return projects.slice(start, start + pageSize);
-  }, [currentPage]);
+    return visibleProjectList.slice(start, start + pageSize);
+  }, [currentPage, visibleProjectList]);
 
   return (
     <DashboardLayout>

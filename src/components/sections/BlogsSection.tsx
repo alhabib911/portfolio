@@ -3,17 +3,24 @@
 import React from "react";
 import Link from "next/link";
 import {
-  BookOpen,
   Calendar,
   Clock,
   ArrowUpRight,
   TrendingUp,
   Tag,
 } from "lucide-react";
-import { blogPosts } from "@/data/blogs";
 
-export default function BlogsSection() {
-  const blogs = blogPosts.slice(0, 6);
+type Blog = {
+  id: string;
+  title: string;
+  date: string;
+  read_time: string;
+  category: string;
+  image_url: string | null;
+  description: string | null;
+};
+
+export default function BlogsSection({ blogs }: { blogs: Blog[] }) {
 
   return (
     <section id="blogs" className="py-16 border-b border-slate-800/80">
@@ -32,7 +39,7 @@ export default function BlogsSection() {
 
         <Link
           href="/my-blogs"
-          className="inline-flex items-center gap-2 text-sm font-bold text-emerald-400 hover:text-emerald-300 transition-colors bg-emerald-500/5 px-4 py-2 rounded-xl border border-emerald-500/20"
+          className="inline-flex items-center gap-2 text-sm font-bold text-gray-100 bg-[#059669] px-4 py-2 rounded-xl border border-emerald-500/20"
         >
           <span>View All Articles</span>
           <ArrowUpRight className="w-4 h-4" />
@@ -48,7 +55,7 @@ export default function BlogsSection() {
             <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-900">
               <div className="absolute inset-0 bg-gradient-to-t from-[#0d1322] via-transparent to-transparent z-10 opacity-60"></div>
               <img
-                src={blog.image}
+                src={blog.image_url || "/images/profile.jpg.png"}
                 alt={blog.title}
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -69,7 +76,7 @@ export default function BlogsSection() {
                 </span>
                 <span className="flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5 text-emerald-500/60" />
-                  {blog.readTime}
+                  {blog.read_time}
                 </span>
               </div>
 
@@ -98,9 +105,9 @@ export default function BlogsSection() {
       </div>
 
       {/* Featured Newsletter CTA */}
-      <div className="mt-16 bg-[#F3F4F6] border border-emerald-500/50 rounded-[40px] p-8 sm:p-12 flex flex-col lg:flex-row items-center justify-between gap-10">
+      <div className="mt-16 shadow rounded-[40px] p-8 sm:p-12 flex flex-col lg:flex-row items-center justify-between gap-10">
          <div className="space-y-4 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-[10px] font-black uppercase tracking-widest border border-cyan-500/20">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 text-[#059669] text-[10px] font-black uppercase tracking-widest border border-cyan-500/20">
                <TrendingUp className="w-3 h-3" />
                Stay Updated
             </div>
@@ -114,9 +121,9 @@ export default function BlogsSection() {
             <input 
                type="email" 
                placeholder="Enter your email address" 
-               className="px-6 py-4 rounded-2xl bg-gray-100 border border-emerald-500/50 text-gray-400 focus:outline-none focus:border-emerald-500/50 transition-colors w-full sm:w-80 text-sm font-medium"
+               className="px-4 py-2 rounded-2xl bg-gray-50/5 border border-emerald-500/50 text-gray-400 focus:outline-none focus:border-emerald-500/50 transition-colors w-full sm:w-80 text-sm font-medium"
             />
-            <button className="px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold text-sm transition-all shadow-xl shadow-emerald-500/10 active:scale-95 cursor-pointer">
+            <button className="px-8 py-4 rounded-2xl bg-[#059669] text-gray-100 font-bold text-sm transition-all shadow-xl shadow-emerald-500/10 active:scale-95 cursor-pointer">
                Join Now
             </button>
          </div>

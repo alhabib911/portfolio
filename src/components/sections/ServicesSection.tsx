@@ -11,9 +11,11 @@ import {
   CheckCircle2,
   ArrowUpRight,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-export default function ServicesSection() {
-  const services = [
+type Service = { id?: string; title: string; description: string; icon?: string | LucideIcon | null; features: string[]; color?: string };
+
+const fallbackServices: Service[] = [
     {
       title: "Full-Stack Solutions",
       icon: Layers,
@@ -92,7 +94,17 @@ export default function ServicesSection() {
         "Inventory Management",
       ],
     },
-  ];
+];
+
+export default function ServicesSection({ services: databaseServices }: { services?: Service[] }) {
+  const iconMap: Record<string, LucideIcon> = { Layers, Bot, LayoutDashboard, Code, Server, ShoppingCart };
+  const services = databaseServices?.length
+    ? databaseServices.map((service) => ({
+        ...service,
+        icon: typeof service.icon === "string" ? iconMap[service.icon] || Layers : service.icon || Layers,
+        color: "from-emerald-500 to-teal-500",
+      }))
+    : fallbackServices;
 
   return (
     <section id="services" className="py-16 border-b border-slate-800/80">
@@ -112,7 +124,7 @@ export default function ServicesSection() {
       {/* Services Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((service, index) => {
-          const Icon = service.icon;
+          const Icon = typeof service.icon === "string" ? iconMap[service.icon] || Layers : service.icon || Layers;
           return (
             <div
               key={index}

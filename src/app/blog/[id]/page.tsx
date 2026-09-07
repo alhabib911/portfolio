@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import DashboardLayout from "@/components/DashboardLayout";
-import { blogPosts } from "@/data/blogs";
+import { createClient } from "@/lib/supabase/server";
 
 export async function generateStaticParams() {
-  return blogPosts.map((blog) => ({ id: String(blog.id) }));
+  return [];
 }
 
 export default async function BlogDetailPage({
@@ -13,7 +13,13 @@ export default async function BlogDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const blog = blogPosts.find((item) => String(item.id) === id);
+  const supabase = await createClient();
+  const { data: blog } = await supabase
+    .from("blogs")
+    .select("id, title, date, read_time, category, image_url, content")
+    .eq("id", id)
+    .eq("is_published", true)
+    .single();
 
   if (!blog) {
     notFound();
@@ -35,14 +41,14 @@ export default async function BlogDetailPage({
 
           <div className="flex flex-wrap items-center gap-4 text-xs font-medium uppercase tracking-[0.2em] text-slate-600">
             <span>{blog.date}</span>
-            <span>{blog.readTime}</span>
+            <span>{blog.read_time}</span>
           </div>
         </div>
 
-        <img src={blog.image} alt={blog.title} className="h-[320px] w-full rounded-[28px] object-cover shadow-xl shadow-slate-200" />
+        <img src={blog.image_url || "/images/profile.jpg.png"} alt={blog.title} className="h-[320px] w-full rounded-[28px] object-cover shadow-xl shadow-slate-200" />
 
         <div className="space-y-5 text-base leading-8 text-slate-700">
-          {blog.content.map((paragraph) => (
+          {(blog.content as string[] | null || []).map((paragraph: string) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>

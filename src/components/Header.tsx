@@ -1,73 +1,47 @@
 "use client";
 
 import React from "react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { toggleSidebar, toggleCollapse } from "@/redux/slices/sidebarSlice";
-import { Menu, PanelLeft, MessageCircle, Download, ExternalLink, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+import { useState } from "react";
 
 export default function Header() {
-  const dispatch = useAppDispatch();
-  const { isCollapsed, activeSection } = useAppSelector((state) => state.sidebar);
-
-  const formattedSectionName =
-    activeSection.charAt(0).toUpperCase() + activeSection.slice(1);
+  const [open, setOpen] = useState(false);
+  const links = [
+    ["About", "/about"],
+    ["Services", "/services"],
+    ["Skills", "/skills-tech"],
+    ["Projects", "/projects"],
+    ["Blogs", "/blogs"],
+    ["Contact", "/contacts"],
+  ];
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 lg:px-8  backdrop-blur-md border-b border-slate-800/80 transition-all">
-      {/* Left side: Hamburger button + Breadcrumb / Active Section */}
-      <div className="flex items-center gap-3 lg:gap-4">
-        {/* Mobile Hamburger Button */}
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-[#F8FAFC]/90 backdrop-blur-xl">
+      <div className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-12">
+        <Link href="/" className="group flex items-center gap-3">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#059669]/60 text-xs font-black text-[#059669] transition-transform group-hover:rotate-6">AH</span>
+          <span className="hidden text-xs font-bold tracking-[0.18em] text-gray-700 sm:block">ABDULLAH AL HABIB</span>
+        </Link>
+
         <button
-          onClick={() => dispatch(toggleSidebar())}
-          className="p-2 rounded-xl  hover:bg-slate-700/80 text-emerald-400 border border-slate-700/60 lg:hidden transition-colors shadow-sm"
-          aria-label="Toggle Navigation Menu"
+          onClick={() => setOpen((value) => !value)}
+          className="rounded-full border border-slate-300 p-2 text-gray-700 lg:hidden"
+          aria-label="Toggle navigation"
         >
-          <Menu className="w-5 h-5" />
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
 
-        {/* Desktop Collapse Toggle Hamburger Icon */}
-        <button
-          onClick={() => dispatch(toggleCollapse())}
-          className="hidden lg:flex p-2 rounded-xl bg-[#C6EEE3] hover:bg-gray-100 text-emerald-400 border border-slate-700/60 transition-colors shadow-sm cursor-pointer"
-          aria-label="Toggle Sidebar Collapse"
-          title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
-        >
-          <PanelLeft className="w-5 h-5" />
-        </button>
-
-        {/* Breadcrumb / Title */}
-        <div className="flex items-center gap-2 text-sm">
-          <span className="font-medium text-slate-400 hidden sm:inline">
-            Dashboard
-          </span>
-          <span className="text-slate-600 hidden sm:inline">/</span>
-          <span className="font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20 text-xs sm:text-sm">
-            {formattedSectionName}
-          </span>
-        </div>
-      </div>
-
-      {/* Right side: Action links & status */}
-      <div className="flex items-center gap-2 sm:gap-3">
-        <a
-          href="https://wa.me/+8801753105250"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium text-xs sm:text-sm transition-all"
-        >
-          <MessageCircle className="w-4 h-4 text-emerald-400" />
-          <span>WhatsApp</span>
-        </a>
-
-        <a
-          href="https://calendly.com/habib02cluster/30min"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm transition-all shadow-lg shadow-emerald-500/20 active:scale-[0.98]"
-        >
-          <Sparkles className="w-4 h-4" />
-          <span>Let's Discuss</span>
-        </a>
+        <nav className={`${open ? "absolute left-5 right-5 top-[86px] flex" : "hidden"} flex-col gap-1 rounded-2xl border border-slate-200 bg-white p-3 shadow-lg lg:static lg:flex lg:flex-row lg:items-center lg:gap-7 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none`}>
+          {links.map(([label, href]) => (
+            <Link key={href} href={href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2 text-xs text-gray-600 transition-colors hover:bg-emerald-50 hover:text-[#059669] lg:px-0 lg:py-1">
+              {label}
+            </Link>
+          ))}
+          <Link href="/contacts" className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[#059669] px-5 py-2 text-xs font-bold text-white transition-transform hover:-translate-y-0.5 lg:mt-0">
+            Let&apos;s Talk <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </nav>
       </div>
     </header>
   );

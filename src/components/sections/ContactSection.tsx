@@ -16,7 +16,9 @@ import {
   Clock,
 } from "lucide-react";
 
-export default function ContactSection() {
+type ContactAbout = { email?: string | null; phone?: string | null; whatsapp?: string | null };
+
+export default function ContactSection({ about }: { about?: ContactAbout | null }) {
   const dispatch = useAppDispatch();
   const formData = useAppSelector((state) => state.portfolio.contactForm);
 
@@ -35,8 +37,8 @@ export default function ContactSection() {
   const contactInfo = [
     {
       title: "EMAIL",
-      value: "habib02cluster@gmail.com",
-      link: "mailto:habib02cluster@gmail.com",
+      value: about?.email || "habib02cluster@gmail.com",
+      link: `mailto:${about?.email || "habib02cluster@gmail.com"}`,
       icon: Mail,
       color: "text-emerald-400",
       bg: "bg-emerald-500/10",
@@ -44,28 +46,19 @@ export default function ContactSection() {
     },
     {
       title: "CALL / WHATSAPP",
-      value: "+8801753105250",
-      link: "https://wa.me/8801753105250",
+      value: about?.phone || "+8801753105250",
+      link: about?.whatsapp || "https://wa.me/8801753105250",
       icon: Phone,
       color: "text-cyan-400",
       bg: "bg-cyan-500/10",
       border: "border-cyan-500/20",
     },
-    // {
-    //   title: "LOCATION",
-    //   value: "Kurigram, Bangladesh",
-    //   link: "https://maps.app.goo.gl/C94JcTnfn8h7ncYZA",
-    //   icon: MapPin,
-    //   color: "text-amber-400",
-    //   bg: "bg-amber-500/10",
-    //   border: "border-amber-500/20",
-    // },
   ];
 
   return (
     <section id="contact" className="py-16 pb-24">
       <div className="space-y-3 mb-12">
-        <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+        <span className="text-xs font-bold uppercase tracking-widest text-[#059669] bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
           Get In Touch
         </span>
         <h2 className="text-2xl sm:text-4xl font-extrabold text-gray-700 tracking-tight">
@@ -86,7 +79,7 @@ export default function ContactSection() {
                   href={info.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center gap-5 p-5 rounded-3xl bg-[#E5F5F5] border border-emerald-400/5 hover:border-emerald-400/5 transition-all group`}
+                  className={`flex items-center gap-5 p-5 rounded-3xl bg-gray-50 shadow border border-emerald-400/5 hover:border-emerald-400/5 transition-all group`}
                 >
                   <div className={`p-3.5 rounded-2xl ${info.bg} ${info.color} border ${info.border} group-hover:scale-110 transition-transform`}>
                     <info.icon className="w-6 h-6" />
@@ -100,7 +93,7 @@ export default function ContactSection() {
           </div>
 
           {/* Availability Card */}
-          <div className="p-8 rounded-[40px] bg-gradient-to-br from-emerald-500/10 to-cyan-500/5 border border-emerald-500/20 space-y-6 relative overflow-hidden group">
+          <div className="p-8 rounded-[40px] bg-gray-50 border border-emerald-500/20 space-y-6 relative overflow-hidden group">
              {/* Decorative glow */}
              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-[50px] -translate-y-1/2 translate-x-1/2"></div>
              
@@ -109,7 +102,7 @@ export default function ContactSection() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
                 </div>
-                <span className="text-sm font-bold text-emerald-400 uppercase tracking-widest">Currently Available</span>
+                <span className="text-sm font-bold text-[#059669] uppercase tracking-widest">Currently Available</span>
              </div>
 
              <h3 className="text-xl font-bold text-gray-600">For freelance & remote opportunities.</h3>
@@ -134,7 +127,7 @@ export default function ContactSection() {
                   href="https://calendly.com/habib02cluster/30min"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-sm transition-all shadow-xl shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98]"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 py-2 rounded-2xl bg-[#059669]  text-gray-100 font-black text-sm transition-all shadow-xl shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Calendar className="w-4 h-4" />
                   <span>Book A Call Directly</span>
@@ -145,9 +138,9 @@ export default function ContactSection() {
 
         {/* Right: Contact Form */}
         <div className="lg:col-span-7">
-          <div className="bg-[#E5F5F5] border border-[#E5F5F5] rounded-[40px] p-8 sm:p-10 shadow-2xl">
+          <div className="bg-gray-100 border border-[#E5F5F5] rounded-[40px] p-8 sm:p-10 shadow-2xl">
              <div className="flex items-center gap-3 mb-8">
-                <div className="p-2 rounded-xl bg-gray-400 text-emerald-600">
+                <div className="p-2 rounded-xl bg-gray-100 text-emerald-600">
                    <MessageSquare className="w-5 h-5" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-700">Send a Message</h3>
@@ -224,7 +217,7 @@ export default function ContactSection() {
                 <div className="pt-2">
                    <button 
                     type="submit"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-sm transition-all shadow-xl shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98]"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 py-2 rounded-2xl bg-[#059669] text-gray-100 font-black text-sm transition-all shadow-xl shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                    >
                      <span>Send Message</span>
                      <Send className="w-4 h-4" />
