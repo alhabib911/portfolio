@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ReduxProvider from "@/redux/ReduxProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,17 +14,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Alex Morgan | Product Designer & Developer",
-  description: "The portfolio and practice of Alex Morgan, a product designer and front-end developer.",
+  title: "Abdullah Al Habib | Full Stack Web Developer",
+  description: "Portfolio of Abdullah Al Habib, a Full Stack Web Developer specializing in Next.js, Node.js, and scalable web applications.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full bg-slate-50 text-slate-800" suppressHydrationWarning>
+        <ReduxProvider>{children}</ReduxProvider>
+      </body>
     </html>
   );
 }
