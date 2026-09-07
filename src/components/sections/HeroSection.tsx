@@ -77,9 +77,7 @@ export default function HeroSection() {
           {/* Action CTAs */}
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <a
-              href="http://localhost:3000/contacts"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/contacts"
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-bold text-sm shadow-xl shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <Sparkles className="w-4 h-4" />
@@ -87,9 +85,7 @@ export default function HeroSection() {
             </a>
 
             <a
-              href="http://localhost:3000/projects"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/projects"
               className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 hover:bg-[#00D492] text-slate-200 hover:text-gray-700 border border-slate-700 font-semibold text-sm transition-all hover:border-emerald-500/50"
             >
               <span>Check Projects</span>

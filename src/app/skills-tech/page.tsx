@@ -13,7 +13,7 @@ export default function SkillsTechPage() {
     <DashboardLayout>
       <div className="space-y-12">
         <SkillsSection />
-        <ContactSection />
+        {/* <ContactSection /> */}
       </div>
     </DashboardLayout>
   );
