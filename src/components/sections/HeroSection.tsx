@@ -87,7 +87,7 @@ export default function HeroSection({ about }: { about?: HeroAbout | null }) {
               Hi, I’m <strong className="text-[#059669] font-semibold">{about?.name || "Abdullah Al Habib"}</strong>, a Full Stack Web Developer specializing in fast, scalable, and SEO-friendly web applications.
             </p>
               <p className="text-sm text-gray-700">
-              {about?.bio || "I build modern SaaS, ERP, eCommerce, and custom web solutions using React, Next.js, Node.js, Express, Prisma, PostgreSQL, and MongoDB, with a focus on clean UI, performance, and scalable architecture."}
+              {about?.bio || "I build modern SaaS, ERP, eCommerce, and custom web solutions using React, Next.js, Node.js, Express, Prisma, Supabase, and MongoDB, with a focus on clean UI, performance, and scalable architecture."}
             </p>
           </div>
 
